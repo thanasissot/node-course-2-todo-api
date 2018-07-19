@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server/server.js"
   },
   "author": "",
   "license": "ISC",
@@ -13,5 +14,11 @@
     "express": "^4.16.3",
     "mongodb": "^3.1.1",
     "mongoose": "^5.2.4"
+  },
+  "devDependencies": {
+    "expect": "^23.4.0",
+    "jest": "^23.4.1",
+    "supertest": "^3.1.0",
+    "tobe": "0.0.2"
   }
 }
