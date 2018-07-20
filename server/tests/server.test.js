@@ -154,7 +154,7 @@ describe('PATCH /todos/:id', () => {
     .expect((res) => {
       expect(res.body.todo.text).toBe('this is changed');
       expect(res.body.todo.completed).toBe(true);
-      expect(res.body.todo.completedAt).toBeA('number');
+      expect(res.body.todo.completedAt).toBeTruthy();
     })
     .end(done);
   });

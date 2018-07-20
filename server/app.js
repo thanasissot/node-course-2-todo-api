@@ -1,3 +1,5 @@
+require('./config/config');
+const port  = process.env.PORT;
 const express = require('express');
 const bodyParser = require('body-parser');
 const _ = require('lodash');
@@ -5,7 +7,6 @@ const {mongoose} = require('./db/mongoose');
 const {Todo} = require('./models/todo');
 const {User} = require('./models/user');
 const {ObjectId} = require('mongodb');
-const port  = process.env.PORT || 3000;
 
 const app = express();
 // you tell express to use bodyparser to send a json object along with the request
