@@ -18,7 +18,7 @@ app.post('/todos', (req, res) => {
 
   todo.save().then((doc) =>{
     res.send(doc);
-    console.log(JSON.stringify(doc, undefined, 3));
+    // console.log(JSON.stringify(doc, undefined, 3));
   }, (err) => {
     res.status(400).send(err);
   });
