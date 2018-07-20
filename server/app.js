@@ -3,6 +3,8 @@ const bodyParser = require('body-parser');
 const {mongoose} = require('./db/mongoose');
 const {Todo} = require('./models/todo');
 const {User} = require('./models/user');
+const {ObjectId} = require('mongodb');
+
 
 const app = express();
 // you tell express to use bodyparser to send a json object along with the request
@@ -31,6 +33,28 @@ app.get('/todos', (req, res) => {
     res.status(400).send(err);
   });
 })
+
+// get /todos/213123
+app.get('/todos/:id', (req, res) => {
+  let id = req.params.id;
+
+  if (!ObjectId.isValid(id)) {
+    return res.status(404).send();
+  }
+
+  Todo.findById(id).then((todo) => {
+    if (!todo) {
+      return res.status(404).send();
+    }
+
+    res.send(
+      todo
+    )
+  }, (err) => {
+    res.status(400).send();
+    console.log(err);
+  })
+});
 
 
 app.listen(3000, () => {
