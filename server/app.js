@@ -11,6 +11,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // CRUD create read update delete
+//POST new Todo
 app.post('/todos', (req, res) => {
   let todo = new Todo({
     text: req.body.text
@@ -24,6 +25,7 @@ app.post('/todos', (req, res) => {
   });
 });
 
+// GET all Todos
 app.get('/todos', (req, res) => {
   Todo.find().then((todos) => {
     res.send({
@@ -34,6 +36,7 @@ app.get('/todos', (req, res) => {
   });
 })
 
+// GET one Todo by id
 app.get('/todos/:id', (req, res) => {
   let id = req.params.id;
 
@@ -51,9 +54,27 @@ app.get('/todos/:id', (req, res) => {
   }, (err) => {
     res.status(400).send();
     console.log(err);
-  })
+  });
 });
 
+// DELETE one todo
+app.delete('/todos/:id', (req, res) => {
+  let id = req.params.id;
+
+  if (!ObjectId.isValid(id)) {
+    return res.status(404).send();
+  }
+  Todo.findByIdAndRemove(id).then((todo) => {
+    if (!todo) {
+      return res.status(404).send();
+    }
+    res.send(
+      todo
+    )
+  }, (err) => {
+    res.status(400).send();
+  });
+});
 
 app.listen(port, () => {
   console.log(`Serving up at port ${port}`);
