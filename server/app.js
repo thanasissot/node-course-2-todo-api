@@ -4,7 +4,7 @@ const {mongoose} = require('./db/mongoose');
 const {Todo} = require('./models/todo');
 const {User} = require('./models/user');
 const {ObjectId} = require('mongodb');
-
+const port  = process.env.PORT || 3000;
 
 const app = express();
 // you tell express to use bodyparser to send a json object along with the request
@@ -34,7 +34,6 @@ app.get('/todos', (req, res) => {
   });
 })
 
-// get /todos/213123
 app.get('/todos/:id', (req, res) => {
   let id = req.params.id;
 
@@ -46,7 +45,6 @@ app.get('/todos/:id', (req, res) => {
     if (!todo) {
       return res.status(404).send();
     }
-
     res.send(
       todo
     )
@@ -57,8 +55,8 @@ app.get('/todos/:id', (req, res) => {
 });
 
 
-app.listen(3000, () => {
-  console.log('Serving on port 3000');
+app.listen(port, () => {
+  console.log(`Serving up at port ${port}`);
 })
 
 module.exports = {app};
