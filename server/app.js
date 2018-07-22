@@ -78,6 +78,7 @@ app.delete('/todos/:id', (req, res) => {
   });
 });
 
+// UPDATE todo
 app.patch('/todos/:id', (req, res) => {
   let id = req.params.id;
   let body = _.pick(req.body, ['text', 'completed']);
@@ -102,6 +103,22 @@ app.patch('/todos/:id', (req, res) => {
     return res.stats(404).send()
   });
 
+});
+
+// POST /users
+app.post('/users', (req, res) => {
+  let body = _.pick(req.body, ['email', 'password']);
+  let user = new User(
+    body
+  );
+// to make password hidden i guess. really dont understand wtf tokens are
+  user.save().then(() => {
+    return user.generateAuthToken();
+  }).then((token) => {
+    res.header('x-auth', token).send(user);
+  }, (err) => {
+    res.status(400).send(err);
+  });
 });
 
 app.listen(port, () => {
