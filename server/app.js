@@ -7,6 +7,7 @@ const {mongoose} = require('./db/mongoose');
 const {Todo} = require('./models/todo');
 const {User} = require('./models/user');
 const {ObjectId} = require('mongodb');
+const {authenticate} = require('./middleware/authenticate');
 
 const app = express();
 // you tell express to use bodyparser to send a json object along with the request
@@ -120,6 +121,11 @@ app.post('/users', (req, res) => {
     res.status(400).send(err);
   });
 });
+
+// private route
+app.get('/users/me', authenticate, (req, res) => {
+  res.send(req.user);
+})
 
 app.listen(port, () => {
   console.log(`Serving up at port ${port}`);
