@@ -140,6 +140,15 @@ app.post('/users/login', (req, res) => {
   })
 });
 
+// private route
+app.delete('/users/me/token', authenticate, (req, res) => {
+  req.user.removeToken(req.token).then(() => {
+    res.status(200).send();
+  }, (err) => {
+    res.status(400).send(err);
+  });
+});
+
 app.listen(port, () => {
   console.log(`Serving up at port ${port}`);
 })
